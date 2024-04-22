@@ -1,7 +1,7 @@
 <h1 align="center">
   <a href="https://github.com/jpope8/skin-image-analysis">
     <!-- Please provide path to your logo here -->
-    <img src="docs/images/ham_images.png" alt="Logo" width="600" height="350">
+    <img src="docs/images/ham_images.png" alt="Logo" width="400" height="350">
   </a>
 </h1>
 
@@ -87,8 +87,7 @@ Buena Suerte.
 
 
 ## References
-> - [1] This work was supported by UK Research and Innovation, Innovate
-UK [grant number 53707].  SYNERGIA - Secure bY desigN End to end platfoRm for larGe scale resource constrained Iot Applications. [InnovateUK](https://gtr.ukri.org/projects?ref=53707) (last retrieved September 2021).
+> - [1] This work was supported by the Jean Golding Institute Staff Seed Corn Funding Call 2023-2024, "Pilot Study to determine Tone Bias in Open-Source Skin Cancer Datasets", [Worktribe](2397644).
 
 ## License
 
