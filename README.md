@@ -69,6 +69,23 @@ The virtual environment only installs pip and python.  Install dependencies via 
 
 This completes the installation.
 
+## Dataset
+
+The data was downloaded from the ISIC archive using the cli tool (need to iinstall this first).
+
+See https://pypi.org/project/isic-cli/
+
+See https://github.com/ImageMarkup/isic-cli
+
+```
+mkdir tone
+
+cd tone
+
+isic image download --search 'fitzpatrick_skin_type:I OR fitzpatrick_skin_type:II OR fitzpatrick_skin_type:III OR fitzpatrick_skin_type:IV OR fitzpatrick_skin_type:V OR fitzpatrick_skin_type:VI' .
+```
+
+
 ## Usage
 
 These instructions assume you have installed common Python analysis libraries using the provided requirements.txt (e.g. pandas, scikit-learn, numpy, tensorflow/keras, matplotlib).  Python3 is assumed and required.
