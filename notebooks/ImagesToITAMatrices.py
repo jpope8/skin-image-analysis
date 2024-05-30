@@ -77,7 +77,7 @@ def colour_mask(L, a, b):
 colour_mask_ufunc = np.vectorize(colour_mask)
 
 def lab_to_ITA(L, a, b):
-  """ Converts CieLab to ITA angle"
+  """ Converts CieLab to ITA angle"""
     if L == np.nan or a == np.nan or b == np.nan:
         return np.nan
     elif b == 0:
