@@ -1,6 +1,9 @@
 This folder contains all the code Huw Day wrote for the Seedcorn project (April 2024 - June 2024).
+Three main sections of code, order of code is intentional (pre-processing etc.)
 
-# colourmapclassifier.ipynb
+# 1) Standalone Colour Map Classifier (proof of concept)
+
+## colourmapclassifier.ipynb
 - This code was early exploration of the ISIC data, as well as initial attempt of a colour map classifier.
 - The early approach for classifying skintone didn't use neural networks.
 - Instead, the approach was to convert pixels from RGB values into ITA values.
@@ -10,9 +13,24 @@ This folder contains all the code Huw Day wrote for the Seedcorn project (April 
 - Some code at the end evaluates how good the classifiers and in particular notes that the optimal performance is about in line with the class imbalance of the dataset.
 - This will be a common theme with other skin tone classifiers.
 
-# ImagesToITAMatrices.py
+# 2) Neural Network taking original ISIC images and classifying light or dark skin tone
+
+## TestTrainSplit.py
+- Very simple bit of code that does the Test Train Split of the ISIC images
+
+## ClassWeight.py
+
+## CNNTrialDataset.py
+
+## CNNTrial.py
+
+# 3) Neural Network taking ITA arrays of ISIC images and classifying light or dark skin tone
+
+## ImagesToITAMatrices.py
 - Pre-processing for a secondary approach, where rather than feeding a neural network raw images, we convert images into arrays of ITA values.
 - Input ISIC images (which have associated Meta data)
 - This code converts those ISIC images into matrices where each pixel is the ITA angle
 - Idea is to feed the ITA matrices into a NN to classify skin tone
+
+## ITACNN.py
   
