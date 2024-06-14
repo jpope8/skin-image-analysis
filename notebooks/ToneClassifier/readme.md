@@ -16,13 +16,16 @@ Three main sections of code, order of code is intentional (pre-processing etc.)
 # 2) Neural Network taking original ISIC images and classifying light or dark skin tone
 
 ## TestTrainSplit.py
-- Very simple bit of code that does the Test Train Split of the ISIC images
+- Very simple bit of code that does the Test Train Split of the ISIC images and saves them as separate csv files
+- Can be altered to fix a random state or vary ratio of test to train.
+- Currently doesn't allow for validation outside of the neural network.
 
 ## ClassWeight.py
+- Works out the class imbalance in case you want to use this in your code.
 
-## CNNTrialDataset.py
-
-## CNNTrial.py
+## CNNTrialDataset.py (make sure this is the right one)
+- Data preparation 
+## CNNTrial.py (make sure this is the right one)
 
 # 3) Neural Network taking ITA arrays of ISIC images and classifying light or dark skin tone
 
@@ -32,5 +35,5 @@ Three main sections of code, order of code is intentional (pre-processing etc.)
 - This code converts those ISIC images into matrices where each pixel is the ITA angle
 - Idea is to feed the ITA matrices into a NN to classify skin tone
 
-## ITACNN.py
+## ITACNN.py (make me)
   
