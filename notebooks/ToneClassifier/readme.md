@@ -1,7 +1,13 @@
 This folder contains all the code Huw Day wrote for the Seedcorn project (April 2024 - June 2024).
 Three main sections of code, order of code is intentional (pre-processing etc.)
+1) Standalone colour map classifier:
+Just basic summary statistics and my first attempt where I converted RGB to ITA and then used the modal ITA value for each image to try to classify skintone.
+2) Neural Network taking original ISIC images and classifying light or dark skin tone:
+Where the majority of my work has been done, a standard Resnet with various modifications in an effort to deal with class imbalances and the tone of the data.
+3) Neural Network taking ITA arrays of ISIC images and classifying light or dark skin tone:
+Code that converts ISIC images into .npy arrays of ITA values. Idea for future classifier that uses these as training data to classify skintone.
 
-# 1) Standalone Colour Map Classifier (proof of concept)
+# 1) Standalone Colour Map Classifier
 
 ## colourmapclassifier.ipynb
 - This code was early exploration of the ISIC data, as well as initial attempt of a colour map classifier.
