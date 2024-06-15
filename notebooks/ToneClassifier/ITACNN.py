@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
 import wandb
 import random
-from CNNTrialDataset import ISIC
+from ITATrialData import ISIC
 
 print(torch.cuda.is_available())
 
@@ -24,7 +24,7 @@ def main():
         "epochs": 50,
         }
     )
-    train_dataset = ISIC("/home/hd15639/SkinTone/myimages", "Train")
+    train_dataset = ISIC("/home/hd15639/SkinTone/ITA_matrices", "Train")
     train_dataloader = DataLoader(train_dataset, batch_size=8, shuffle=True)
 
     test_dataset = ISIC("/home/hd15639/SkinTone/myimages", "Test")
