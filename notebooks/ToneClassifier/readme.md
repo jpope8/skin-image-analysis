@@ -23,9 +23,16 @@ Three main sections of code, order of code is intentional (pre-processing etc.)
 ## ClassWeight.py
 - Works out the class imbalance in case you want to use this in your code.
 
-## CNNTrialDataset.py (make sure this is the right one)
-- Data preparation 
-## CNNTrial.py (make sure this is the right one)
+## CNNTrialDataset.py 
+- Makes the classes which are needed for training the neural net in CNNTrial.py
+- Data preparation with various potential augmentations on the images for robustness
+  
+## CNNTrial.py
+- Fairly out the box resent 50 neural net
+- Some attempts to deal with the massive class imbalance
+- Set up to track model with weights and biases
+
+## [Weights and Biases Project page](https://wandb.ai/disco_huw/SkinToneSeedcorn?nw=nwuserhuwday)
 
 # 3) Neural Network taking ITA arrays of ISIC images and classifying light or dark skin tone
 
@@ -35,5 +42,10 @@ Three main sections of code, order of code is intentional (pre-processing etc.)
 - This code converts those ISIC images into matrices where each pixel is the ITA angle
 - Idea is to feed the ITA matrices into a NN to classify skin tone
 
-## ITACNN.py (make me)
+## To be continued
+- Next steps would be to write/use existing neural network code to load in these .npy arrays
+- From there, train a skin tone classifier but using ITA matrices as an input
+- Make sure to change your data loading to account for the reduced dimension (image rgb arrays are 3x as big as the ITA arrays)
+- Perform transformations to make sure all arrays are the same size, not sure the best way to do this. Could even consider doing this before doing the ITA transformations.
+- Also might want to add random rotations or flips for robustness. 
   
