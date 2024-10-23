@@ -440,11 +440,11 @@ def main():
         print(f"Usage: <folder with JSON files> <epoch_to_detail>")
         print(f"Example: ./results/balanced_2024-09-16_17-26-21/")
         return
-    exp_path = sys.argv[1]
+    prefix = sys.argv[1]
     epoch_to_detail = int(sys.argv[2]) # provide more detail about this epoch's results
 
     #experiment_results = read_experiment(exp_path)
-    experiment_results = read_experiments("results", exp_path, epoch_to_detail)
+    experiment_results = read_experiments("../experiments", prefix, epoch_to_detail)
 
     """
     print(f"\n\n##### RESULTS")
@@ -547,7 +547,7 @@ def main():
 
 
     # Get the folder's name so we can use in name of mng to save
-    path = pathlib.Path(exp_path)
+    path = pathlib.Path(prefix)
     #print(f"NAME {path.name}")  # Output: /path/to/folder/subfolder
     #my_dpi = 96 # not sure this is necessary and may not be portable
     #plt.savefig('my_fig.png', dpi=my_dpi)
