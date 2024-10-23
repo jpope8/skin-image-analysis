@@ -564,11 +564,12 @@ def analyse_predictions(instances):
 
 def main():
     # Get some cli arguments for preprocessing, training, evaluation.
-    if len(sys.argv) != 2:
-        print(f"Usage: <root directory of ISIC images>")
-        print(f"Example: tone")
+    if len(sys.argv) != 3:
+        print(f"Usage: <root directory of ISIC images> <root dir of model>")
+        print(f"Example: ../tone ../experiments/balanced_2024-10-12_09-22-38/")
         return
-    root_dir_name = sys.argv[1]           #root_dir_name = "./tone"
+    data_root_dir_name = sys.argv[1]           #root_dir_name = "./tone"
+    model_root_dir_name = sys.argv[2]
 
     #=========================================================================#
     # 1. Read in the metadata and filter to only have attributes for rows with tone
@@ -577,7 +578,13 @@ def main():
     #trainset_filename = "session_train.csv"
     testset_filename = "session_test.csv"
     model_filename = "session_model.pth"
+
+    testset_filename = os.path.join(model_root_dir_name, testset_filename)
+    model_filename   = os.path.join(model_root_dir_name, model_filename)
+
     class_names = ['benign', 'malignant']
+
+
     
     
     # Check PyTorch has access to MPS (Metal Performance Shader, Apple's GPU architecture)
@@ -609,7 +616,7 @@ def main():
     test_df = pd.read_csv( testset_filename )
     test_dataset = HibaDataset(test_df,
                                class_names,
-                               root_dir=root_dir_name,
+                               root_dir=data_root_dir_name,
                                transform=torchvision.transforms.Compose([
                                    Rescale((224, 224)),
                                    # RandomCrop(224),
