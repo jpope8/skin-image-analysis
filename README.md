@@ -43,35 +43,44 @@
 
 ## Introduction
 
-This repository provides the following.
+This repository provides source code for evaluating tone bias in skin lesion images. The dataset images are a subset from the International Skin Imaging Collaboration (ISIC) Archive.
 
-* Raw enviromenntal sensor data from a deployment in an indoor office area.
-* Code to analyse the processed data.
+* Code to train machine learning models (convolutional neural networks) to determine the diagnosis ({benign,malignant}) given an input image.
+* Code to analyse how well the diagnosis classification performs (traditional test set accuracy metrics).
+* Code to analyse the tone bias of the trained model.
+
+PyTorch is used as the deep learning framework to train/evaluate the models.  The original backend was MPS (Mac M2 Max series) but was also tested with CPU backend.
+
+The hyper-parameter tuning used Optuna and was carried out on the Isambard-AI supercomputer in Bristol, UK, using the Open MPI backend.
 
 ## Installation
 
-First create a virtual python environment.
+First create a virtual python environment.  The virtual environment only installs pip and python.
 
 ```bash
-python3 -m venv env-sdd
-cd ./env-sdd
+python3 -m venv skin-image-analysis
+cd ./skin-image-analysis
 source ./bin/activate
 ```
 
-Now clone the repository.
+Clone the repository.
 
 ```bash
 git clone git clone https://<git username>@github.com/jpope8/skin-image-analysis.git
 (enter your git token)
 ```
 
-The virtual environment only installs pip and python.  Install dependencies via the requirements.txt file.
+Install dependencies via the requirements.txt file.
+
+```bash
+pip install -r requirements.txt 
+```
 
 This completes the installation.
 
 ## Dataset
 
-The data was downloaded from the ISIC archive using the cli tool (need to iinstall this first).
+The data was downloaded from the ISIC archive using the cli tool (need to install this first).
 
 See https://pypi.org/project/isic-cli/
 
@@ -88,14 +97,16 @@ isic image download --search 'fitzpatrick_skin_type:I OR fitzpatrick_skin_type:I
 
 ## Usage
 
-These instructions assume you have installed common Python analysis libraries using the provided requirements.txt (e.g. pandas, scikit-learn, numpy, tensorflow/keras, matplotlib).  Python3 is assumed and required.
+These instructions assume you have installed common Python analysis libraries using the provided requirements.txt.  Python3 is assumed and required.
 
 
-For converting audit log to relational-interaction graph and displaying.
+To train a new model, run the tone_bias_train module.
+
+Usage: <root directory of ISIC images> <number of epochs for training> <'balance' or 'imbalanced' | path to existing model>")
 
 ```bash
 cd src
-python parse.py 100 0.7
+python tone_bias_train.py tone 20 imbalanced
 ```
 
 This will take some time as the zip files will be unzipped and read into series for display.  When finished, a plot will show for each sensor.
