@@ -4,6 +4,41 @@ import json
 import os
 import pathlib
 
+
+
+import numpy as np
+import scipy.stats as stats
+
+def compute_ci(data, confidence_level):
+    # Sample data
+    #data = [1, 2, 3, 4, 5, 6]
+    n = len(data)
+
+    # Calculate mean and std
+    sample_mean = np.mean(data)
+    sample_std = np.std(data)
+
+    # Set confidence level (e.g., 95%)
+    #confidence_level = 0.95
+
+    # Calculate z-score or t-score
+    if n <= 30:
+        df = n - 1  # assuming a sample mean, use t-distribution
+        score = stats.t.ppf(1 - (1 - confidence_level) / 2, df)
+        # Calculate the t-score (Z-score) using the t-distribution
+    else:
+        df = n  # use normal distribution
+        score = stats.norm.ppf(1 - (1 - confidence_level) / 2) # ???
+
+    # Calculate confidence interval
+    moe = score * sample_std / np.sqrt(n)
+    confidence_interval = (sample_mean - moe, sample_mean + moe)
+
+
+    #print(confidence_interval)
+    return confidence_interval
+
+
 def get_files( dir_path, ext ):
     files = list()
     for file in os.listdir(dir_path):
@@ -318,12 +353,28 @@ def read_experiment( exp_path ):
                 results = json.loads(line)
 
                 # We have a dict of dicts making life hard, flatten
+
+                tone_di_results = results['tone_di_results']
+                pos_min = tone_di_results['tp_min'] + tone_di_results['fp_min']
+                min_count = tone_di_results['min_count']
+                selection_rate_min = pos_min / min_count
+
+                pos_maj = tone_di_results['tp_maj'] + tone_di_results['fp_maj']
+                maj_count = tone_di_results['maj_count']
+                selection_rate_maj = pos_maj / maj_count
+
+                results['tone_di_selection_rate_min'] = selection_rate_min
+                results['tone_di_selection_rate_maj'] = selection_rate_maj
+
+
                 results['tone_di'] = results['tone_di_results']['di']
                 # why f1 for tone, classifier diagnosis?  Bad approach, f1 is same for all di results
                 results['f1'] = results['tone_di_results']['f1']
 
                 results['gender_di'] = results['gender_di_results']['di']
                 results['control_di'] = results['control_di_results']['di']
+
+
 
                 # Sanity check, will no longer need the epoch
                 epoch = results['epoch']
@@ -386,6 +437,7 @@ def read_experiments(experiments_folder, prefix, epoch_to_detail):
     """
     experiment_accumulator = dict()
     counts = dict()
+    values = dict()
     for exp_path in experiments.keys():
         experiment = experiments[exp_path]
         print(f"FILE {exp_path} epochs {len(experiment)}")
@@ -404,13 +456,23 @@ def read_experiments(experiments_folder, prefix, epoch_to_detail):
                     if measure_name not in accumulator_epoch:
                         accumulator_epoch[measure_name] = 0.0
                         counts[f"{epoch}_{measure_name}_count"] = 0
+                    #accumulator_epoch[f"{measure_name}_total"] += measure_value
                     accumulator_epoch[measure_name] += measure_value
                     counts[f"{epoch}_{measure_name}_count"] += 1
 
+                    # Keep list of values for this epoch and measure, can derive mean and variation
+                    key = f"{epoch}_{measure_name}_values"
+                    if key not in values:
+                        values[key] = list()
+                    values[key].append(measure_value)
+
+
+
+
             # DEBUGGING, no effect on processing
-            #if epoch == epoch_to_detail:
-            #     print(f"EPOCH DETAILS {epoch_to_detail} experiment {exp_path}")
-            #     print_epoch_results(epoch_results)
+            if epoch == epoch_to_detail:
+                 print(f"EPOCH DETAILS {epoch_to_detail} experiment {exp_path}")
+                 print_epoch_results(epoch_results)
 
     #for epoch in range(1, epoch_to_detail):
     for epoch in experiment_accumulator.keys():
@@ -420,8 +482,22 @@ def read_experiments(experiments_folder, prefix, epoch_to_detail):
             measure_value = epoch_results[measure_name]
             measure_count = counts[f"{epoch}_{measure_name}_count"]
             measure_avg = measure_value/measure_count
-            #print(f"    {measure_name} -> {measure_value}   count {measure_count}  avg={measure_avg:.2f}")
+
+            if epoch == epoch_to_detail:
+                print(f"    AGGREGATE {measure_name} -> {measure_value}   count {measure_count}  avg={measure_avg:.4f}")
             epoch_results[measure_name] = measure_avg
+
+    for key in values.keys():
+        tokens = key.split("_")
+        epoch = int(tokens[0])
+        list_of_values = values[key]
+        measure_mean = sum(list_of_values) / len(list_of_values)
+
+        confidence_level = 0.90
+        confidence_interval = compute_ci(list_of_values, confidence_level)
+        #print(f"[{epoch}] {key} -> {sum(list_of_values):.4f}  count {len(list_of_values)}  avg={measure_mean:.4f} [{confidence_interval[0]:.4f},{confidence_interval[1]:.4f}]")
+
+
 
 
     # # Some information about the last epoch
