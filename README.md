@@ -105,11 +105,11 @@ To train a new model, run the tone_bias_train module.
 Usage: <root directory of ISIC images> <number of epochs for training> <'balance' or 'imbalanced' | path to existing model>")
 
 ```bash
-cd src
-python tone_bias_train.py tone 20 imbalanced
+cd skin-image-analysis
+python python ./src/tone_bias_train.py tone 20 balance
 ```
 
-This will take some time as the zip files will be unzipped and read into series for display.  When finished, a plot will show for each sensor.
+This will take some time depending on your machine but should finish within an hour.  When finished, the model will be saved in the experiments folder.
 
 Buena Suerte.
 
