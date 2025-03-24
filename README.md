@@ -115,7 +115,17 @@ Buena Suerte.
 
 
 ## References
-> - [1] This work was supported by the Jean Golding Institute Staff Seed Corn Funding Call 2023-2024, "Pilot Study to determine Tone Bias in Open-Source Skin Cancer Datasets", [Worktribe](2397644).
+> - [1] This work was supported by the Jean Golding Institute Staff Seed Corn Funding Call 2023-2024, "Pilot Study to determine Tone Bias in Open-Source Skin Cancer Datasets".
+
+> - [2] @misc{pope2025skincancermachinelearning,
+      title={Skin Cancer Machine Learning Model Tone Bias}, 
+      author={James Pope and Md Hassanuzzaman and William Chapman and Huw Day and Mingmar Sherpa and Omar Emara and Nirmala Adhikari and Ayush Joshi},
+      year={2025},
+      eprint={2410.06385},
+      archivePrefix={arXiv},
+      primaryClass={eess.IV},
+      url={https://arxiv.org/abs/2410.06385}, 
+}
 
 ## License
 
