@@ -124,7 +124,7 @@ Buena Suerte.
       eprint={2410.06385},
       archivePrefix={arXiv},
       primaryClass={eess.IV},
-      url={https://arxiv.org/abs/2410.06385}, 
+      url={https://arxiv.org/abs/2410.06385 }, 
 }
 
 ## License
